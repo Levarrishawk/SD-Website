@@ -1,10 +1,16 @@
 import Link from "next/link";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { getFeatureGroups, getNewsItems, getSiteLinks } from "./directus";
+import {
+  getFeatureGroups,
+  getHomepage,
+  getNewsItems,
+  getSiteLinks,
+} from "./directus";
 
 export default async function Home() {
-  const [featureGroups, newsItems, siteLinks] = await Promise.all([
+  const [homepage, featureGroups, newsItems, siteLinks] = await Promise.all([
+    getHomepage(),
     getFeatureGroups(),
     getNewsItems(),
     getSiteLinks(),
@@ -18,28 +24,29 @@ export default async function Home() {
         <div className="orb orb-two" />
         <div className="hero-grid" />
         <div className="hero-content">
-          <p className="eyebrow"><span /> A STAR WARS GALAXIES EMULATOR</p>
+          <p className="eyebrow"><span /> {homepage.hero_eyebrow}</p>
           <h1>
-            YOUR STORY.<br />
-            <span>REBORN</span> AMONG<br />
-            THE STARS.
+            {homepage.hero_title_line_1}<br />
+            <span>{homepage.hero_title_accent}</span><br />
+            {homepage.hero_title_line_3}
           </h1>
-          <p className="hero-copy">
-            Stardust-3 is a reimagined Pre-NGE experience built for those who
-            still believe the galaxy should feel vast, dangerous, and alive.
-          </p>
+          <p className="hero-copy">{homepage.hero_subtitle}</p>
           <div className="hero-actions">
-            <Link className="button button-primary" href="/play">Begin your journey <span>→</span></Link>
-            <a className="text-link" href="#about">Discover Stardust <span>↓</span></a>
+            <Link className="button button-primary" href={homepage.primary_button_url}>
+              {homepage.primary_button_text} <span>→</span>
+            </Link>
+            <Link className="text-link" href={homepage.secondary_button_url}>
+              {homepage.secondary_button_text} <span>↓</span>
+            </Link>
           </div>
         </div>
         <div className="status-card" aria-label="Server status">
           <div>
             <span className="status-light" />
-            <span className="status-label">GALAXY STATUS</span>
+            <span className="status-label">{homepage.status_label}</span>
           </div>
-          <strong>IN DEVELOPMENT</strong>
-          <p>Launch information coming soon</p>
+          <strong>{homepage.status_value}</strong>
+          <p>{homepage.status_detail}</p>
         </div>
         <div className="scroll-note">SCROLL TO EXPLORE <span>↓</span></div>
       </section>
@@ -47,18 +54,11 @@ export default async function Home() {
       <section className="manifesto section" id="about">
         <p className="section-index">01 / THE PROJECT</p>
         <div className="manifesto-copy">
-          <p className="eyebrow"><span /> A NEW ERA BEGINS</p>
-          <h2>THE GALAXY YOU REMEMBER.<br /><em>NOT AS YOU LEFT IT.</em></h2>
+          <p className="eyebrow"><span /> {homepage.project_eyebrow}</p>
+          <h2>{homepage.project_title}<br /><em>{homepage.project_title_accent}</em></h2>
           <div className="two-column">
-            <p>
-              Stardust-3 carries forward the sandbox spirit of Star Wars
-              Galaxies with a renewed focus on combat, discovery, and
-              community-built stories.
-            </p>
-            <p>
-              This is the foundation. Replace this copy with the story of your
-              server, its timeline, and what makes this new chapter different.
-            </p>
+            <p>{homepage.project_body_left}</p>
+            <p>{homepage.project_body_right}</p>
           </div>
         </div>
       </section>

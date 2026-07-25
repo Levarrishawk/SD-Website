@@ -15,6 +15,49 @@ const directusUrl = (
 
 type DirectusResponse<T> = { data: T };
 
+export type HomepageContent = {
+  hero_eyebrow: string;
+  hero_title_line_1: string;
+  hero_title_accent: string;
+  hero_title_line_3: string;
+  hero_subtitle: string;
+  primary_button_text: string;
+  primary_button_url: string;
+  secondary_button_text: string;
+  secondary_button_url: string;
+  status_label: string;
+  status_value: string;
+  status_detail: string;
+  project_eyebrow: string;
+  project_title: string;
+  project_title_accent: string;
+  project_body_left: string;
+  project_body_right: string;
+};
+
+const fallbackHomepage: HomepageContent = {
+  hero_eyebrow: "A STAR WARS GALAXIES EMULATOR",
+  hero_title_line_1: "YOUR STORY.",
+  hero_title_accent: "REBORN",
+  hero_title_line_3: "AMONG THE STARS.",
+  hero_subtitle:
+    "Stardust-3 is a reimagined Pre-NGE experience built for those who still believe the galaxy should feel vast, dangerous, and alive.",
+  primary_button_text: "Begin your journey",
+  primary_button_url: "/play",
+  secondary_button_text: "Discover Stardust",
+  secondary_button_url: "#about",
+  status_label: "GALAXY STATUS",
+  status_value: "IN DEVELOPMENT",
+  status_detail: "Launch information coming soon",
+  project_eyebrow: "A NEW ERA BEGINS",
+  project_title: "THE GALAXY YOU REMEMBER.",
+  project_title_accent: "NOT AS YOU LEFT IT.",
+  project_body_left:
+    "Stardust-3 carries forward the sandbox spirit of Star Wars Galaxies with a renewed focus on combat, discovery, and community-built stories.",
+  project_body_right:
+    "This is the foundation. Replace this copy with the story of your server, its timeline, and what makes this new chapter different.",
+};
+
 async function readDirectus<T>(path: string): Promise<T | null> {
   try {
     const response = await fetch(`${directusUrl}${path}`, {
@@ -30,6 +73,21 @@ async function readDirectus<T>(path: string): Promise<T | null> {
 
 function nonEmpty<T>(value: T[] | null): value is T[] {
   return Array.isArray(value) && value.length > 0;
+}
+
+export async function getHomepage(): Promise<HomepageContent> {
+  const homepage = await readDirectus<Partial<HomepageContent>>(
+    "/items/homepage",
+  );
+
+  if (!homepage) return fallbackHomepage;
+
+  return Object.fromEntries(
+    Object.entries(fallbackHomepage).map(([key, fallback]) => [
+      key,
+      homepage[key as keyof HomepageContent] || fallback,
+    ]),
+  ) as HomepageContent;
 }
 
 export async function getSiteLinks(): Promise<SiteLinks> {
