@@ -45,6 +45,7 @@ export type SiteBranding = {
   brand_logo: string;
   site_background: string;
   social_image: string;
+  favicon: string;
 };
 
 type DirectusFile = string | { id?: string } | null;
@@ -83,6 +84,7 @@ const fallbackBranding: SiteBranding = {
   brand_logo: "/stardust-logo.png",
   site_background: "/stardust-wallpaper.jpg",
   social_image: "/og.png",
+  favicon: "/favicon.svg",
 };
 
 async function readDirectus<T>(path: string): Promise<T | null> {
@@ -171,8 +173,9 @@ export async function getSiteBranding(): Promise<SiteBranding> {
     brand_logo?: DirectusFile;
     site_background?: DirectusFile;
     social_image?: DirectusFile;
+    favicon?: DirectusFile;
   }>(
-    "/items/site_settings?fields=brand_logo,site_background,social_image",
+    "/items/site_settings?fields=brand_logo,site_background,social_image,favicon",
   );
 
   return {
@@ -188,6 +191,7 @@ export async function getSiteBranding(): Promise<SiteBranding> {
       settings?.social_image ?? null,
       fallbackBranding.social_image,
     ),
+    favicon: assetUrl(settings?.favicon ?? null, fallbackBranding.favicon),
   };
 }
 

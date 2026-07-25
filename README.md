@@ -9,7 +9,7 @@ collection has not been configured yet, the site uses the defaults in
 
 - `site_settings` (singleton): `site_title`, `site_description`,
   `discord_url`, `github_url`, `launcher_download_url`, `brand_logo`,
-  `site_background`, `social_image`
+  `site_background`, `social_image`, `favicon`
 - `homepage` (singleton): hero, server status, project introduction fields,
   and `hero_background`
 - `features`: `status`, `sort`, `number`, `title`, `short`, `label`, `items`

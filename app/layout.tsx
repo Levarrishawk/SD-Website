@@ -15,17 +15,17 @@ const body = Inter({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [{ site_title, site_description }, { social_image }] = await Promise.all([
-    getSiteMetadata(),
-    getSiteBranding(),
-  ]);
+  const [
+    { site_title, site_description },
+    { social_image, favicon },
+  ] = await Promise.all([getSiteMetadata(), getSiteBranding()]);
 
   return {
     title: site_title,
     description: site_description,
     icons: {
-      icon: "/favicon.svg",
-      shortcut: "/favicon.svg",
+      icon: favicon,
+      shortcut: favicon,
     },
     metadataBase: new URL("https://www.stardust-swg.com"),
     openGraph: {
