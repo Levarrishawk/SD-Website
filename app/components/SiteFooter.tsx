@@ -1,12 +1,18 @@
-import Image from "next/image";
 import Link from "next/link";
+import { getSiteBranding } from "../directus";
 import { siteLinks as fallbackSiteLinks, type SiteLinks } from "../site-content";
 
-export function SiteFooter({ links = fallbackSiteLinks }: { links?: SiteLinks }) {
+export async function SiteFooter({
+  links = fallbackSiteLinks,
+}: {
+  links?: SiteLinks;
+}) {
+  const { brand_logo } = await getSiteBranding();
+
   return (
     <footer>
       <Link className="wordmark" href="/">
-        <Image src="/stardust-logo.png" alt="Stardust" width={82} height={78} />
+        <img src={brand_logo} alt="Stardust-3" width={82} height={78} />
         <span className="brand-edition">III</span>
       </Link>
       <p>

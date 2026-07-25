@@ -33,12 +33,21 @@ export type HomepageContent = {
   project_title_accent: string;
   project_body_left: string;
   project_body_right: string;
+  hero_background: string;
 };
 
 export type SiteMetadata = {
   site_title: string;
   site_description: string;
 };
+
+export type SiteBranding = {
+  brand_logo: string;
+  site_background: string;
+  social_image: string;
+};
+
+type DirectusFile = string | { id?: string } | null;
 
 const fallbackHomepage: HomepageContent = {
   hero_eyebrow: "A STAR WARS GALAXIES EMULATOR",
@@ -61,12 +70,19 @@ const fallbackHomepage: HomepageContent = {
     "Stardust-3 carries forward the sandbox spirit of Star Wars Galaxies with a renewed focus on combat, discovery, and community-built stories.",
   project_body_right:
     "This is the foundation. Replace this copy with the story of your server, its timeline, and what makes this new chapter different.",
+  hero_background: "/stardust-wallpaper.jpg",
 };
 
 const fallbackMetadata: SiteMetadata = {
   site_title: "Stardust-3 | A Galaxy Reimagined",
   site_description:
     "Stardust-3 is a reimagined Star Wars Galaxies experience built around combat, discovery, and community.",
+};
+
+const fallbackBranding: SiteBranding = {
+  brand_logo: "/stardust-logo.png",
+  site_background: "/stardust-wallpaper.jpg",
+  social_image: "/og.png",
 };
 
 async function readDirectus<T>(path: string): Promise<T | null> {
@@ -86,19 +102,36 @@ function nonEmpty<T>(value: T[] | null): value is T[] {
   return Array.isArray(value) && value.length > 0;
 }
 
+function assetUrl(file: DirectusFile, fallback: string): string {
+  const id = typeof file === "string" ? file : file?.id;
+  return id ? `${directusUrl}/assets/${id}` : fallback;
+}
+
 export async function getHomepage(): Promise<HomepageContent> {
-  const homepage = await readDirectus<Partial<HomepageContent>>(
-    "/items/homepage",
-  );
+  const homepage = await readDirectus<
+    Partial<Omit<HomepageContent, "hero_background">> & {
+      hero_background?: DirectusFile;
+    }
+  >("/items/homepage");
 
   if (!homepage) return fallbackHomepage;
 
-  return Object.fromEntries(
-    Object.entries(fallbackHomepage).map(([key, fallback]) => [
-      key,
-      homepage[key as keyof HomepageContent] || fallback,
-    ]),
-  ) as HomepageContent;
+  const text = Object.fromEntries(
+    Object.entries(fallbackHomepage)
+      .filter(([key]) => key !== "hero_background")
+      .map(([key, fallback]) => [
+        key,
+        homepage[key as keyof typeof homepage] || fallback,
+      ]),
+  ) as Omit<HomepageContent, "hero_background">;
+
+  return {
+    ...text,
+    hero_background: assetUrl(
+      homepage.hero_background ?? null,
+      fallbackHomepage.hero_background,
+    ),
+  };
 }
 
 export async function getSiteLinks(): Promise<SiteLinks> {
@@ -130,6 +163,31 @@ export async function getSiteMetadata(): Promise<SiteMetadata> {
     site_title: settings?.site_title || fallbackMetadata.site_title,
     site_description:
       settings?.site_description || fallbackMetadata.site_description,
+  };
+}
+
+export async function getSiteBranding(): Promise<SiteBranding> {
+  const settings = await readDirectus<{
+    brand_logo?: DirectusFile;
+    site_background?: DirectusFile;
+    social_image?: DirectusFile;
+  }>(
+    "/items/site_settings?fields=brand_logo,site_background,social_image",
+  );
+
+  return {
+    brand_logo: assetUrl(
+      settings?.brand_logo ?? null,
+      fallbackBranding.brand_logo,
+    ),
+    site_background: assetUrl(
+      settings?.site_background ?? null,
+      fallbackBranding.site_background,
+    ),
+    social_image: assetUrl(
+      settings?.social_image ?? null,
+      fallbackBranding.social_image,
+    ),
   };
 }
 

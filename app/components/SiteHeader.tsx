@@ -1,11 +1,13 @@
-import Image from "next/image";
 import Link from "next/link";
+import { getSiteBranding } from "../directus";
 
-export function SiteHeader({ solid = false }: { solid?: boolean }) {
+export async function SiteHeader({ solid = false }: { solid?: boolean }) {
+  const { brand_logo } = await getSiteBranding();
+
   return (
     <header className={`site-header${solid ? " site-header-solid" : ""}`}>
       <Link className="wordmark" href="/" aria-label="Stardust-3 home">
-        <Image src="/stardust-logo.png" alt="" width={82} height={78} priority />
+        <img src={brand_logo} alt="Stardust-3" width={82} height={78} />
         <span className="brand-edition">III</span>
       </Link>
       <nav className="desktop-nav" aria-label="Primary navigation">

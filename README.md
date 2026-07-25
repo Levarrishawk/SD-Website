@@ -8,8 +8,10 @@ collection has not been configured yet, the site uses the defaults in
 ## Directus collections
 
 - `site_settings` (singleton): `site_title`, `site_description`,
-  `discord_url`, `github_url`, `launcher_download_url`
-- `homepage` (singleton): hero, server status, and project introduction fields
+  `discord_url`, `github_url`, `launcher_download_url`, `brand_logo`,
+  `site_background`, `social_image`
+- `homepage` (singleton): hero, server status, project introduction fields,
+  and `hero_background`
 - `features`: `status`, `sort`, `number`, `title`, `short`, `label`, `items`
 - `updates`: `status`, `date_created`, `date`, `title`, `tag`, `excerpt`
 - `play_steps`: `status`, `sort`, `number`, `title`, `text`

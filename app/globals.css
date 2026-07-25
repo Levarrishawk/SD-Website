@@ -97,7 +97,7 @@ a { color: inherit; text-decoration: none; }
   background:
     linear-gradient(90deg, rgba(5,6,9,.88) 0%, rgba(5,6,9,.55) 48%, rgba(5,6,9,.94) 79%),
     linear-gradient(0deg, rgba(5,6,9,.72), transparent 45%),
-    url("/stardust-wallpaper.jpg") center / cover no-repeat,
+    var(--hero-background-image, url("/stardust-wallpaper.jpg")) center / cover no-repeat,
     #050609;
 }
 
@@ -387,7 +387,7 @@ footer {
   background:
     linear-gradient(90deg, rgba(5,6,9,.96), rgba(5,6,9,.52) 58%, rgba(5,6,9,.88)),
     linear-gradient(0deg, #080a0f, transparent 55%),
-    url("/stardust-wallpaper.jpg") center 52% / cover no-repeat;
+    var(--site-background-image, url("/stardust-wallpaper.jpg")) center 52% / cover no-repeat;
 }
 .page-hero::after {
   content: "";

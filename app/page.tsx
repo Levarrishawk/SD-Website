@@ -19,7 +19,13 @@ export default async function Home() {
     <main>
       <SiteHeader />
 
-      <section className="hero" id="top">
+      <section
+        className="hero"
+        id="top"
+        style={{
+          "--hero-background-image": `url("${homepage.hero_background}")`,
+        } as React.CSSProperties}
+      >
         <div className="orb orb-one" />
         <div className="orb orb-two" />
         <div className="hero-grid" />

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter } from "next/font/google";
-import { getSiteMetadata } from "./directus";
+import { getSiteBranding, getSiteMetadata } from "./directus";
 import "./globals.css";
 
 const display = Barlow_Condensed({
@@ -15,7 +15,10 @@ const body = Inter({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { site_title, site_description } = await getSiteMetadata();
+  const [{ site_title, site_description }, { social_image }] = await Promise.all([
+    getSiteMetadata(),
+    getSiteBranding(),
+  ]);
 
   return {
     title: site_title,
@@ -28,25 +31,34 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: site_title,
       description: site_description,
-      images: ["/og.png"],
+      images: [social_image],
     },
     twitter: {
       card: "summary_large_image",
       title: site_title,
       description: site_description,
-      images: ["/og.png"],
+      images: [social_image],
     },
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { site_background } = await getSiteBranding();
+
   return (
     <html lang="en">
-      <body className={`${display.variable} ${body.variable}`}>{children}</body>
+      <body
+        className={`${display.variable} ${body.variable}`}
+        style={{
+          "--site-background-image": `url("${site_background}")`,
+        } as React.CSSProperties}
+      >
+        {children}
+      </body>
     </html>
   );
 }
