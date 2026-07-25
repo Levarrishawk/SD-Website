@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
-import { playSteps, siteLinks } from "../site-content";
+import { getPlaySteps, getSiteLinks } from "../directus";
 
 export const metadata: Metadata = {
   title: "Getting Started | Stardust-3",
   description: "Prepare to enter the Stardust-3 galaxy.",
 };
 
-export default function PlayPage() {
+export default async function PlayPage() {
+  const [playSteps, siteLinks] = await Promise.all([
+    getPlaySteps(),
+    getSiteLinks(),
+  ]);
   return (
     <main>
       <SiteHeader solid />
@@ -41,7 +45,7 @@ export default function PlayPage() {
           launcher notes, and troubleshooting links here.
         </p>
       </aside>
-      <SiteFooter />
+      <SiteFooter links={siteLinks} />
     </main>
   );
 }

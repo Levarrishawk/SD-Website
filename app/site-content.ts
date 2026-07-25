@@ -1,10 +1,37 @@
-export const siteLinks = {
+export type SiteLinks = {
+  discord: string;
+  github: string;
+  download: string;
+};
+
+export type FeatureGroup = {
+  number: string;
+  title: string;
+  short: string;
+  label: string;
+  items: string[];
+};
+
+export type NewsItem = {
+  date: string;
+  title: string;
+  tag: string;
+  excerpt: string;
+};
+
+export type PlayStep = {
+  number: string;
+  title: string;
+  text: string;
+};
+
+export const siteLinks: SiteLinks = {
   discord: "#",
   github: "#",
   download: "#",
 };
 
-export const featureGroups = [
+export const featureGroups: FeatureGroup[] = [
   {
     number: "01",
     title: "Combat, Rebalanced",
@@ -43,7 +70,7 @@ export const featureGroups = [
   },
 ];
 
-export const newsItems = [
+export const newsItems: NewsItem[] = [
   {
     date: "COMING SOON",
     title: "Stardust-3 development update",
@@ -67,7 +94,7 @@ export const newsItems = [
   },
 ];
 
-export const playSteps = [
+export const playSteps: PlayStep[] = [
   {
     number: "01",
     title: "Join the community",

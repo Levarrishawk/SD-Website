@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
   },
-  metadataBase: new URL("https://stardust-3.levarrishawk.chatgpt.site"),
+  metadataBase: new URL("https://www.stardust-swg.com"),
   openGraph: {
     title: "Stardust-3 | A Galaxy Reimagined",
     description: "Your story. Reborn among the stars.",

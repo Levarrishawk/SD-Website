@@ -1,8 +1,24 @@
-# vinext-starter
+# Stardust-3 Website
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+The Stardust-3 public website reads published content from the Directus
+instance at `https://cms.stardust-swg.com`. If the CMS is unavailable or a
+collection has not been configured yet, the site uses the defaults in
+`app/site-content.ts`.
+
+## Directus collections
+
+- `site_settings` (singleton): `discord_url`, `github_url`,
+  `launcher_download_url`
+- `features`: `status`, `sort`, `number`, `title`, `short`, `label`, `items`
+- `updates`: `status`, `date_created`, `date`, `title`, `tag`, `excerpt`
+- `play_steps`: `status`, `sort`, `number`, `title`, `text`
+
+Public read access must be enabled for these collections. Only items whose
+`status` is `published` are displayed for repeatable collections.
+
+Set `DIRECTUS_URL` during the build to use a different Directus instance.
+
+This project runs on [vinext](https://github.com/cloudflare/vinext).
 
 ## Prerequisites
 

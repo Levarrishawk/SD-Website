@@ -1,9 +1,14 @@
 import Link from "next/link";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { featureGroups, newsItems, siteLinks } from "./site-content";
+import { getFeatureGroups, getNewsItems, getSiteLinks } from "./directus";
 
-export default function Home() {
+export default async function Home() {
+  const [featureGroups, newsItems, siteLinks] = await Promise.all([
+    getFeatureGroups(),
+    getNewsItems(),
+    getSiteLinks(),
+  ]);
   return (
     <main>
       <SiteHeader />
@@ -113,7 +118,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SiteFooter />
+      <SiteFooter links={siteLinks} />
     </main>
   );
 }

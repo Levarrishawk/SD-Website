@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { siteLinks } from "../site-content";
+import { siteLinks as fallbackSiteLinks, type SiteLinks } from "../site-content";
 
-export function SiteFooter() {
+export function SiteFooter({ links = fallbackSiteLinks }: { links?: SiteLinks }) {
   return (
     <footer>
       <Link className="wordmark" href="/">
@@ -15,8 +15,8 @@ export function SiteFooter() {
       </p>
       <div className="footer-links">
         <Link href="/updates">News</Link>
-        <a href={siteLinks.discord}>Discord</a>
-        <a href={siteLinks.github}>GitHub</a>
+        <a href={links.discord}>Discord</a>
+        <a href={links.github}>GitHub</a>
       </div>
     </footer>
   );

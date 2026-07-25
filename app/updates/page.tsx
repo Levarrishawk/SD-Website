@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
-import { newsItems } from "../site-content";
+import { getNewsItems, getSiteLinks } from "../directus";
 
 export const metadata: Metadata = {
   title: "Updates | Stardust-3",
   description: "Development news and transmissions from Stardust-3.",
 };
 
-export default function UpdatesPage() {
+export default async function UpdatesPage() {
+  const [newsItems, siteLinks] = await Promise.all([
+    getNewsItems(),
+    getSiteLinks(),
+  ]);
   return (
     <main>
       <SiteHeader solid />
@@ -32,7 +36,7 @@ export default function UpdatesPage() {
           </article>
         ))}
       </section>
-      <SiteFooter />
+      <SiteFooter links={siteLinks} />
     </main>
   );
 }

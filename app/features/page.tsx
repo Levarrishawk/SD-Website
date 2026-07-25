@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
-import { featureGroups } from "../site-content";
+import { getFeatureGroups, getSiteLinks } from "../directus";
 
 export const metadata: Metadata = {
   title: "Features | Stardust-3",
   description: "Explore the core experience being built for Stardust-3.",
 };
 
-export default function FeaturesPage() {
+export default async function FeaturesPage() {
+  const [featureGroups, siteLinks] = await Promise.all([
+    getFeatureGroups(),
+    getSiteLinks(),
+  ]);
   return (
     <main>
       <SiteHeader solid />
@@ -43,7 +47,7 @@ export default function FeaturesPage() {
         <h2>MORE DETAILS<br /><em>COMING SOON.</em></h2>
         <Link className="button button-primary" href="/updates">Follow development <span>→</span></Link>
       </section>
-      <SiteFooter />
+      <SiteFooter links={siteLinks} />
     </main>
   );
 }
