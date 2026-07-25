@@ -7,8 +7,8 @@ collection has not been configured yet, the site uses the defaults in
 
 ## Directus collections
 
-- `site_settings` (singleton): `discord_url`, `github_url`,
-  `launcher_download_url`
+- `site_settings` (singleton): `site_title`, `site_description`,
+  `discord_url`, `github_url`, `launcher_download_url`
 - `homepage` (singleton): hero, server status, and project introduction fields
 - `features`: `status`, `sort`, `number`, `title`, `short`, `label`, `items`
 - `updates`: `status`, `date_created`, `date`, `title`, `tag`, `excerpt`

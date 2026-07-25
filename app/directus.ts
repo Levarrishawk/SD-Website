@@ -35,6 +35,11 @@ export type HomepageContent = {
   project_body_right: string;
 };
 
+export type SiteMetadata = {
+  site_title: string;
+  site_description: string;
+};
+
 const fallbackHomepage: HomepageContent = {
   hero_eyebrow: "A STAR WARS GALAXIES EMULATOR",
   hero_title_line_1: "YOUR STORY.",
@@ -56,6 +61,12 @@ const fallbackHomepage: HomepageContent = {
     "Stardust-3 carries forward the sandbox spirit of Star Wars Galaxies with a renewed focus on combat, discovery, and community-built stories.",
   project_body_right:
     "This is the foundation. Replace this copy with the story of your server, its timeline, and what makes this new chapter different.",
+};
+
+const fallbackMetadata: SiteMetadata = {
+  site_title: "Stardust-3 | A Galaxy Reimagined",
+  site_description:
+    "Stardust-3 is a reimagined Star Wars Galaxies experience built around combat, discovery, and community.",
 };
 
 async function readDirectus<T>(path: string): Promise<T | null> {
@@ -107,6 +118,18 @@ export async function getSiteLinks(): Promise<SiteLinks> {
       settings?.launcher_download_url ||
       settings?.download ||
       fallbackSiteLinks.download,
+  };
+}
+
+export async function getSiteMetadata(): Promise<SiteMetadata> {
+  const settings = await readDirectus<Partial<SiteMetadata>>(
+    "/items/site_settings?fields=site_title,site_description",
+  );
+
+  return {
+    site_title: settings?.site_title || fallbackMetadata.site_title,
+    site_description:
+      settings?.site_description || fallbackMetadata.site_description,
   };
 }
 

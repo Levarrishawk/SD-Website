@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter } from "next/font/google";
+import { getSiteMetadata } from "./directus";
 import "./globals.css";
 
 const display = Barlow_Condensed({
@@ -13,27 +14,30 @@ const body = Inter({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Stardust-3 | A Galaxy Reimagined",
-  description:
-    "Stardust-3 is a reimagined Star Wars Galaxies experience built around combat, discovery, and community.",
-  icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-  },
-  metadataBase: new URL("https://www.stardust-swg.com"),
-  openGraph: {
-    title: "Stardust-3 | A Galaxy Reimagined",
-    description: "Your story. Reborn among the stars.",
-    images: ["/og.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Stardust-3 | A Galaxy Reimagined",
-    description: "Your story. Reborn among the stars.",
-    images: ["/og.png"],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { site_title, site_description } = await getSiteMetadata();
+
+  return {
+    title: site_title,
+    description: site_description,
+    icons: {
+      icon: "/favicon.svg",
+      shortcut: "/favicon.svg",
+    },
+    metadataBase: new URL("https://www.stardust-swg.com"),
+    openGraph: {
+      title: site_title,
+      description: site_description,
+      images: ["/og.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: site_title,
+      description: site_description,
+      images: ["/og.png"],
+    },
+  };
+}
 
 export default function RootLayout({
   children,
