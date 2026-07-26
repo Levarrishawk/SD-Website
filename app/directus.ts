@@ -63,6 +63,14 @@ export type PlayPageContent = {
   launcher_enabled: boolean;
 };
 
+export type UpdatesPageContent = {
+  hero_eyebrow: string;
+  hero_title: string;
+  hero_title_accent: string;
+  hero_description: string;
+  article_label: string;
+};
+
 type DirectusFile = string | { id?: string } | null;
 
 const fallbackHomepage: HomepageContent = {
@@ -117,6 +125,15 @@ const fallbackPlayPage: PlayPageContent = {
   requirements_description:
     "Add supported operating systems, required game files, storage space, launcher notes, and troubleshooting links here.",
   launcher_enabled: false,
+};
+
+const fallbackUpdatesPage: UpdatesPageContent = {
+  hero_eyebrow: "TRANSMISSIONS",
+  hero_title: "FROM THE",
+  hero_title_accent: "FRONTIER.",
+  hero_description:
+    "Development reports, feature reveals, and player guides will live here.",
+  article_label: "ARTICLE PLACEHOLDER",
 };
 
 async function readDirectus<T>(path: string): Promise<T | null> {
@@ -258,6 +275,24 @@ export async function getPlayPage(): Promise<PlayPageContent> {
       page.requirements_description ||
       fallbackPlayPage.requirements_description,
     launcher_enabled: page.launcher_enabled ?? fallbackPlayPage.launcher_enabled,
+  };
+}
+
+export async function getUpdatesPage(): Promise<UpdatesPageContent> {
+  const page = await readDirectus<Partial<UpdatesPageContent>>(
+    "/items/updates_page?fields=hero_eyebrow,hero_title,hero_title_accent,hero_description,article_label",
+  );
+
+  if (!page) return fallbackUpdatesPage;
+
+  return {
+    hero_eyebrow: page.hero_eyebrow || fallbackUpdatesPage.hero_eyebrow,
+    hero_title: page.hero_title || fallbackUpdatesPage.hero_title,
+    hero_title_accent:
+      page.hero_title_accent || fallbackUpdatesPage.hero_title_accent,
+    hero_description:
+      page.hero_description || fallbackUpdatesPage.hero_description,
+    article_label: page.article_label || fallbackUpdatesPage.article_label,
   };
 }
 

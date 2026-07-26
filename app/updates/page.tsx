@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
-import { getNewsItems, getSiteLinks } from "../directus";
+import { getNewsItems, getSiteLinks, getUpdatesPage } from "../directus";
 
 export const metadata: Metadata = {
   title: "Updates | Stardust-3",
@@ -9,7 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default async function UpdatesPage() {
-  const [newsItems, siteLinks] = await Promise.all([
+  const [updatesPage, newsItems, siteLinks] = await Promise.all([
+    getUpdatesPage(),
     getNewsItems(),
     getSiteLinks(),
   ]);
@@ -17,9 +18,9 @@ export default async function UpdatesPage() {
     <main>
       <SiteHeader solid />
       <section className="page-hero compact">
-        <p className="eyebrow"><span /> TRANSMISSIONS</p>
-        <h1>FROM THE<br /><span>FRONTIER.</span></h1>
-        <p>Development reports, feature reveals, and player guides will live here.</p>
+        <p className="eyebrow"><span /> {updatesPage.hero_eyebrow}</p>
+        <h1>{updatesPage.hero_title}<br /><span>{updatesPage.hero_title_accent}</span></h1>
+        <p>{updatesPage.hero_description}</p>
       </section>
       <section className="article-grid">
         {newsItems.map((item, index) => (
@@ -31,7 +32,7 @@ export default async function UpdatesPage() {
               <span className="update-date">{item.date}</span>
               <h2>{item.title}</h2>
               <p>{item.excerpt}</p>
-              <span className="coming-label">ARTICLE PLACEHOLDER</span>
+              <span className="coming-label">{updatesPage.article_label}</span>
             </div>
           </article>
         ))}
