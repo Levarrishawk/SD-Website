@@ -133,7 +133,7 @@ const fallbackUpdatesPage: UpdatesPageContent = {
   hero_title_accent: "FRONTIER.",
   hero_description:
     "Development reports, feature reveals, and player guides will live here.",
-  article_label: "ARTICLE PLACEHOLDER",
+  article_label: "READ ARTICLE",
 };
 
 async function readDirectus<T>(path: string): Promise<T | null> {
