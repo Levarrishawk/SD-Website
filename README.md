@@ -12,6 +12,8 @@ collection has not been configured yet, the site uses the defaults in
   `site_background`, `social_image`, `favicon`
 - `homepage` (singleton): hero, server status, project introduction fields,
   and `hero_background`
+- `play_page` (singleton): hero, Discord and launcher buttons, launcher state,
+  and client requirements fields
 - `features`: `status`, `sort`, `number`, `title`, `short`, `label`, `items`
 - `updates`: `status`, `date_created`, `date`, `title`, `tag`, `excerpt`
 - `play_steps`: `status`, `sort`, `number`, `title`, `text`

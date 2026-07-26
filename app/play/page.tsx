@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
-import { getPlaySteps, getSiteLinks } from "../directus";
+import { getPlayPage, getPlaySteps, getSiteLinks } from "../directus";
 
 export const metadata: Metadata = {
   title: "Getting Started | Stardust-3",
@@ -9,23 +9,35 @@ export const metadata: Metadata = {
 };
 
 export default async function PlayPage() {
-  const [playSteps, siteLinks] = await Promise.all([
+  const [playPage, playSteps, siteLinks] = await Promise.all([
+    getPlayPage(),
     getPlaySteps(),
     getSiteLinks(),
   ]);
+  const launcherUrl = playPage.launcher_button_url || siteLinks.download;
+  const launcherEnabled =
+    playPage.launcher_enabled && Boolean(launcherUrl && launcherUrl !== "#");
+
   return (
     <main>
       <SiteHeader solid />
       <section className="page-hero play-hero">
-        <p className="eyebrow"><span /> GETTING STARTED</p>
-        <h1>YOUR JOURNEY<br /><span>STARTS HERE.</span></h1>
-        <p>
-          This page is ready for your final registration, download, and
-          installation instructions.
-        </p>
+        <p className="eyebrow"><span /> {playPage.hero_eyebrow}</p>
+        <h1>{playPage.hero_title}<br /><span>{playPage.hero_title_accent}</span></h1>
+        <p>{playPage.hero_description}</p>
         <div className="hero-actions">
-          <a className="button button-primary" href={siteLinks.discord}>Join Discord <span>↗</span></a>
-          <a className="button button-secondary disabled-button" aria-disabled="true">Launcher coming soon</a>
+          <a className="button button-primary" href={siteLinks.discord}>
+            {playPage.discord_button_text} <span>↗</span>
+          </a>
+          {launcherEnabled ? (
+            <a className="button button-secondary" href={launcherUrl}>
+              {playPage.launcher_button_text} <span>→</span>
+            </a>
+          ) : (
+            <span className="button button-secondary disabled-button" aria-disabled="true">
+              {playPage.launcher_button_text}
+            </span>
+          )}
         </div>
       </section>
       <section className="steps-section">
@@ -38,12 +50,9 @@ export default async function PlayPage() {
         ))}
       </section>
       <aside className="requirements">
-        <p className="section-index">CLIENT REQUIREMENTS</p>
-        <h2>BEFORE YOU<br /><em>BEGIN.</em></h2>
-        <p>
-          Add supported operating systems, required game files, storage space,
-          launcher notes, and troubleshooting links here.
-        </p>
+        <p className="section-index">{playPage.requirements_label}</p>
+        <h2>{playPage.requirements_title}<br /><em>{playPage.requirements_title_accent}</em></h2>
+        <p>{playPage.requirements_description}</p>
       </aside>
       <SiteFooter links={siteLinks} />
     </main>

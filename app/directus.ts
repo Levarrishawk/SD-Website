@@ -48,6 +48,21 @@ export type SiteBranding = {
   favicon: string;
 };
 
+export type PlayPageContent = {
+  hero_eyebrow: string;
+  hero_title: string;
+  hero_title_accent: string;
+  hero_description: string;
+  discord_button_text: string;
+  launcher_button_text: string;
+  launcher_button_url: string;
+  requirements_label: string;
+  requirements_title: string;
+  requirements_title_accent: string;
+  requirements_description: string;
+  launcher_enabled: boolean;
+};
+
 type DirectusFile = string | { id?: string } | null;
 
 const fallbackHomepage: HomepageContent = {
@@ -85,6 +100,23 @@ const fallbackBranding: SiteBranding = {
   site_background: "/stardust-wallpaper.jpg",
   social_image: "/og.png",
   favicon: "/favicon.svg",
+};
+
+const fallbackPlayPage: PlayPageContent = {
+  hero_eyebrow: "GETTING STARTED",
+  hero_title: "YOUR JOURNEY",
+  hero_title_accent: "STARTS HERE.",
+  hero_description:
+    "This page is ready for your final registration, download, and installation instructions.",
+  discord_button_text: "Join Discord",
+  launcher_button_text: "Launcher coming soon",
+  launcher_button_url: "",
+  requirements_label: "CLIENT REQUIREMENTS",
+  requirements_title: "BEFORE YOU",
+  requirements_title_accent: "BEGIN.",
+  requirements_description:
+    "Add supported operating systems, required game files, storage space, launcher notes, and troubleshooting links here.",
+  launcher_enabled: false,
 };
 
 async function readDirectus<T>(path: string): Promise<T | null> {
@@ -192,6 +224,40 @@ export async function getSiteBranding(): Promise<SiteBranding> {
       fallbackBranding.social_image,
     ),
     favicon: assetUrl(settings?.favicon ?? null, fallbackBranding.favicon),
+  };
+}
+
+export async function getPlayPage(): Promise<PlayPageContent> {
+  const page = await readDirectus<Partial<PlayPageContent>>(
+    "/items/play_page?fields=hero_eyebrow,hero_title,hero_title_accent,hero_description,discord_button_text,launcher_button_text,launcher_button_url,requirements_label,requirements_title,requirements_title_accent,requirements_description,launcher_enabled",
+  );
+
+  if (!page) return fallbackPlayPage;
+
+  return {
+    hero_eyebrow: page.hero_eyebrow || fallbackPlayPage.hero_eyebrow,
+    hero_title: page.hero_title || fallbackPlayPage.hero_title,
+    hero_title_accent:
+      page.hero_title_accent || fallbackPlayPage.hero_title_accent,
+    hero_description:
+      page.hero_description || fallbackPlayPage.hero_description,
+    discord_button_text:
+      page.discord_button_text || fallbackPlayPage.discord_button_text,
+    launcher_button_text:
+      page.launcher_button_text || fallbackPlayPage.launcher_button_text,
+    launcher_button_url:
+      page.launcher_button_url || fallbackPlayPage.launcher_button_url,
+    requirements_label:
+      page.requirements_label || fallbackPlayPage.requirements_label,
+    requirements_title:
+      page.requirements_title || fallbackPlayPage.requirements_title,
+    requirements_title_accent:
+      page.requirements_title_accent ||
+      fallbackPlayPage.requirements_title_accent,
+    requirements_description:
+      page.requirements_description ||
+      fallbackPlayPage.requirements_description,
+    launcher_enabled: page.launcher_enabled ?? fallbackPlayPage.launcher_enabled,
   };
 }
 
