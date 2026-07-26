@@ -131,39 +131,16 @@ a { color: inherit; text-decoration: none; }
   mask-image: linear-gradient(to right, black, transparent 72%);
 }
 
-.orb {
+.hero-planets {
   position: absolute;
-  border-radius: 50%;
+  z-index: 1;
+  right: -2vw;
+  bottom: -2%;
+  width: min(1240px, 85vw);
+  aspect-ratio: 3 / 2;
   pointer-events: none;
-}
-.orb-one {
-  width: min(68vw, 900px);
-  aspect-ratio: 1;
-  right: -14vw;
-  bottom: -35%;
-  background:
-    radial-gradient(circle at 36% 28%, rgba(238,173,108,.42), transparent 4%),
-    radial-gradient(circle at 58% 38%, rgba(27,29,35,.95) 0 3%, transparent 3.5%),
-    radial-gradient(circle at 42% 50%, rgba(32,35,42,.95) 0 9%, transparent 9.5%),
-    radial-gradient(circle at 35% 25%, #999188 0, #514b47 12%, #24252a 42%, #0c0e13 71%);
-  box-shadow: -38px -24px 100px rgba(207,117,58,.14), inset 42px 28px 90px rgba(232,198,137,.12);
-  filter: contrast(1.1);
-}
-.orb-one::after {
-  content: "";
-  position: absolute;
-  inset: -11%;
-  border: 1px solid rgba(215,180,90,.22);
-  border-radius: 50%;
-  transform: rotate(-17deg) scaleY(.43);
-}
-.orb-two {
-  width: 72px;
-  height: 72px;
-  top: 25%;
-  right: 17%;
-  background: radial-gradient(circle at 30% 25%, #ddd5c7, #655f58 58%, #1c202a 100%);
-  box-shadow: 0 0 45px rgba(216,202,177,.14);
+  background: url("/hero-planets.png") right bottom / contain no-repeat;
+  filter: drop-shadow(-28px -12px 70px rgba(128, 85, 255, .16));
 }
 
 .hero-content { position: relative; z-index: 2; max-width: 860px; }
@@ -623,7 +600,7 @@ footer p { color: #646a75; font-size: 9px; line-height: 1.6; text-align: center;
 @media (max-width: 900px) {
   .desktop-nav { display: none; }
   .hero { min-height: 820px; height: auto; }
-  .orb-one { width: 850px; right: -520px; opacity: .7; }
+  .hero-planets { width: 1050px; right: -520px; opacity: .72; }
   .status-card { display: none; }
   .manifesto { grid-template-columns: 1fr; }
   .feature-grid { grid-template-columns: 1fr; }
@@ -645,6 +622,7 @@ footer p { color: #646a75; font-size: 9px; line-height: 1.6; text-align: center;
   .nav-cta { font-size: 0; padding-left: 20px; }
   .nav-cta::before { content: "JOIN"; font-size: 10px; }
   .hero { padding-top: 130px; align-items: flex-start; }
+  .hero-planets { right: -620px; opacity: .58; }
   h1 { font-size: clamp(58px, 19vw, 82px); }
   .hero-copy { font-size: 14px; }
   .hero-actions { align-items: stretch; flex-direction: column; gap: 20px; }

@@ -26,8 +26,7 @@ export default async function Home() {
           "--hero-background-image": `url("${homepage.hero_background}")`,
         } as React.CSSProperties}
       >
-        <div className="orb orb-one" />
-        <div className="orb orb-two" />
+        <div className="hero-planets" aria-hidden="true" />
         <div className="hero-grid" />
         <div className="hero-content">
           <p className="eyebrow"><span /> {homepage.hero_eyebrow}</p>
