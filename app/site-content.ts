@@ -17,6 +17,10 @@ export type NewsItem = {
   title: string;
   tag: string;
   excerpt: string;
+  slug?: string;
+  featured_image?: string;
+  image_alt_text?: string;
+  content?: string;
 };
 
 export type PlayStep = {

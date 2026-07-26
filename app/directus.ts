@@ -304,10 +304,25 @@ export async function getFeatureGroups(): Promise<FeatureGroup[]> {
 }
 
 export async function getNewsItems(): Promise<NewsItem[]> {
-  const updates = await readDirectus<NewsItem[]>(
-    "/items/updates?fields=date,title,tag,excerpt&filter[status][_eq]=published&sort=-date_created",
+  const updates = await readDirectus<
+    (Omit<NewsItem, "featured_image"> & {
+      featured_image?: DirectusFile;
+    })[]
+  >(
+    "/items/updates?fields=date,title,tag,excerpt,slug,featured_image,image_alt_text,content&filter[status][_eq]=published&sort=-date_created",
   );
-  return nonEmpty(updates) ? updates : fallbackNews;
+
+  if (!nonEmpty(updates)) return fallbackNews;
+
+  return updates.map((update) => ({
+    ...update,
+    featured_image: assetUrl(update.featured_image ?? null, ""),
+  }));
+}
+
+export async function getNewsItem(slug: string): Promise<NewsItem | null> {
+  const updates = await getNewsItems();
+  return updates.find((update) => update.slug === slug) ?? null;
 }
 
 export async function getPlaySteps(): Promise<PlayStep[]> {

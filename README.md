@@ -16,7 +16,8 @@ collection has not been configured yet, the site uses the defaults in
   and client requirements fields
 - `updates_page` (singleton): Updates hero content and article-card label
 - `features`: `status`, `sort`, `number`, `title`, `short`, `label`, `items`
-- `updates`: `status`, `date_created`, `date`, `title`, `tag`, `excerpt`
+- `updates`: `status`, `date_created`, `date`, `title`, `tag`, `excerpt`,
+  `slug`, `featured_image`, `image_alt_text`, `content`
 - `play_steps`: `status`, `sort`, `number`, `title`, `text`
 
 Public read access must be enabled for these collections. Only items whose
