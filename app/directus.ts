@@ -318,10 +318,20 @@ export async function getUpdatesPage(): Promise<UpdatesPageContent> {
 }
 
 export async function getFeatureGroups(): Promise<FeatureGroup[]> {
-  const features = await readDirectus<FeatureGroup[]>(
-    "/items/features?fields=number,title,short,label,items&filter[status][_eq]=published&sort=sort",
+  const features = await readDirectus<
+    (Omit<FeatureGroup, "card_image"> & {
+      card_image?: DirectusFile;
+    })[]
+  >(
+    "/items/features?fields=number,title,short,label,items,card_image,card_image_alt&filter[status][_eq]=published&sort=sort",
   );
-  return nonEmpty(features) ? features : fallbackFeatures;
+
+  if (!nonEmpty(features)) return fallbackFeatures;
+
+  return features.map((feature) => ({
+    ...feature,
+    card_image: assetUrl(feature.card_image ?? null, ""),
+  }));
 }
 
 export async function getNewsItems(): Promise<NewsItem[]> {

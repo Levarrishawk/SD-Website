@@ -10,6 +10,8 @@ export type FeatureGroup = {
   short: string;
   label: string;
   items: string[];
+  card_image?: string;
+  card_image_alt?: string;
 };
 
 export type NewsItem = {

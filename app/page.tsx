@@ -80,7 +80,16 @@ export default async function Home() {
           {featureGroups.map((feature) => (
             <article className="feature-card" key={feature.number}>
               <span className="feature-number">{feature.number}</span>
-              <div className="feature-symbol" aria-hidden="true">✦</div>
+              <div className="feature-symbol">
+                {feature.card_image ? (
+                  <img
+                    src={feature.card_image}
+                    alt={feature.card_image_alt || ""}
+                  />
+                ) : (
+                  <span aria-hidden="true">✦</span>
+                )}
+              </div>
               <h3>{feature.title}</h3>
               <p>{feature.short}</p>
               <Link href="/features" aria-label={`Learn more about ${feature.title}`}>

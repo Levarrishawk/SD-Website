@@ -15,7 +15,8 @@ collection has not been configured yet, the site uses the defaults in
 - `play_page` (singleton): hero, Discord and launcher buttons, launcher state,
   and client requirements fields
 - `updates_page` (singleton): Updates hero content and article-card label
-- `features`: `status`, `sort`, `number`, `title`, `short`, `label`, `items`
+- `features`: `status`, `sort`, `number`, `title`, `short`, `label`, `items`,
+  `card_image`, `card_image_alt`
 - `updates`: `status`, `date_created`, `date`, `title`, `tag`, `excerpt`,
   `slug`, `featured_image`, `image_alt_text`, `content`
 - `play_steps`: `status`, `sort`, `number`, `title`, `text`
