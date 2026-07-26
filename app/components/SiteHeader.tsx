@@ -1,8 +1,11 @@
 import Link from "next/link";
-import { getSiteBranding } from "../directus";
+import { getSiteBranding, getSiteLinks } from "../directus";
 
 export async function SiteHeader({ solid = false }: { solid?: boolean }) {
-  const { brand_logo } = await getSiteBranding();
+  const [{ brand_logo }, siteLinks] = await Promise.all([
+    getSiteBranding(),
+    getSiteLinks(),
+  ]);
 
   return (
     <header className={`site-header${solid ? " site-header-solid" : ""}`}>
@@ -14,6 +17,12 @@ export async function SiteHeader({ solid = false }: { solid?: boolean }) {
         <Link href="/#about">About</Link>
         <Link href="/features">Features</Link>
         <Link href="/updates">Updates</Link>
+        <a href={siteLinks.github} target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+        <a href={siteLinks.discord} target="_blank" rel="noreferrer">
+          Discord
+        </a>
       </nav>
       <Link className="nav-cta" href="/play">
         Join the galaxy <span aria-hidden="true">↗</span>
