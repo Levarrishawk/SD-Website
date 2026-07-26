@@ -58,7 +58,7 @@ export default async function Home() {
       </section>
 
       <section className="manifesto section" id="about">
-        <p className="section-index">01 / THE PROJECT</p>
+        <p className="section-index">{homepage.project_section_label}</p>
         <div className="manifesto-copy">
           <p className="eyebrow"><span /> {homepage.project_eyebrow}</p>
           <h2>{homepage.project_title}<br /><em>{homepage.project_title_accent}</em></h2>
@@ -72,13 +72,10 @@ export default async function Home() {
       <section className="features section" id="features">
         <div className="section-heading">
           <div>
-            <p className="section-index">02 / CORE EXPERIENCE</p>
-            <h2>BUILT TO FEEL<br /><em>DIFFERENT.</em></h2>
+            <p className="section-index">{homepage.features_section_label}</p>
+            <h2>{homepage.features_title}<br /><em>{homepage.features_title_accent}</em></h2>
           </div>
-          <p className="section-intro">
-            Use these pillars to introduce the three ideas at the heart of
-            Stardust-3.
-          </p>
+          <p className="section-intro">{homepage.features_intro}</p>
         </div>
         <div className="feature-grid">
           {featureGroups.map((feature) => (
@@ -87,7 +84,9 @@ export default async function Home() {
               <div className="feature-symbol" aria-hidden="true">✦</div>
               <h3>{feature.title}</h3>
               <p>{feature.short}</p>
-              <Link href="/features" aria-label={`Learn more about ${feature.title}`}>Explore feature <span>↗</span></Link>
+              <Link href="/features" aria-label={`Learn more about ${feature.title}`}>
+                {homepage.features_link_text} <span>↗</span>
+              </Link>
             </article>
           ))}
         </div>
@@ -96,14 +95,20 @@ export default async function Home() {
       <section className="updates section" id="updates">
         <div className="section-heading">
           <div>
-            <p className="section-index">03 / TRANSMISSIONS</p>
-            <h2>LATEST FROM<br /><em>THE FRONTIER.</em></h2>
+            <p className="section-index">{homepage.updates_section_label}</p>
+            <h2>{homepage.updates_title}<br /><em>{homepage.updates_title_accent}</em></h2>
           </div>
-          <Link className="text-link" href="/updates">View all updates <span>→</span></Link>
+          <Link className="text-link" href="/updates">
+            {homepage.updates_link_text} <span>→</span>
+          </Link>
         </div>
         <div className="update-list">
           {newsItems.map((update) => (
-            <Link className="update-row" href="/updates" key={update.title}>
+            <Link
+              className="update-row"
+              href={update.slug ? `/updates/${update.slug}` : "/updates"}
+              key={update.title}
+            >
               <span className="update-date">{update.date}</span>
               <span className="update-title">{update.title}</span>
               <span className="update-tag">{update.tag}</span>

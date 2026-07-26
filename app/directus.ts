@@ -33,6 +33,16 @@ export type HomepageContent = {
   project_title_accent: string;
   project_body_left: string;
   project_body_right: string;
+  project_section_label: string;
+  features_section_label: string;
+  features_title: string;
+  features_title_accent: string;
+  features_intro: string;
+  features_link_text: string;
+  updates_section_label: string;
+  updates_title: string;
+  updates_title_accent: string;
+  updates_link_text: string;
   hero_background: string;
 };
 
@@ -94,6 +104,17 @@ const fallbackHomepage: HomepageContent = {
     "Stardust-3 carries forward the sandbox spirit of Star Wars Galaxies with a renewed focus on combat, discovery, and community-built stories.",
   project_body_right:
     "This is the foundation. Replace this copy with the story of your server, its timeline, and what makes this new chapter different.",
+  project_section_label: "01 / THE PROJECT",
+  features_section_label: "02 / CORE EXPERIENCE",
+  features_title: "BUILT TO FEEL",
+  features_title_accent: "DIFFERENT.",
+  features_intro:
+    "Use these pillars to introduce the three ideas at the heart of Stardust-3.",
+  features_link_text: "EXPLORE FEATURE",
+  updates_section_label: "03 / TRANSMISSIONS",
+  updates_title: "LATEST FROM",
+  updates_title_accent: "THE FRONTIER.",
+  updates_link_text: "VIEW ALL UPDATES",
   hero_background: "/stardust-wallpaper.jpg",
 };
 

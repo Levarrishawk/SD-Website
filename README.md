@@ -10,8 +10,8 @@ collection has not been configured yet, the site uses the defaults in
 - `site_settings` (singleton): `site_title`, `site_description`,
   `discord_url`, `github_url`, `launcher_download_url`, `brand_logo`,
   `site_background`, `social_image`, `favicon`
-- `homepage` (singleton): hero, server status, project introduction fields,
-  and `hero_background`
+- `homepage` (singleton): hero, server status, project introduction, numbered
+  homepage preview headings and labels, and `hero_background`
 - `play_page` (singleton): hero, Discord and launcher buttons, launcher state,
   and client requirements fields
 - `updates_page` (singleton): Updates hero content and article-card label
