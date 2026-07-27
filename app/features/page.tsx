@@ -31,6 +31,14 @@ export default async function FeaturesPage() {
             <div className="detail-kicker">
               <span>{group.number}</span>
               <p>{group.label}</p>
+              {group.card_image ? (
+                <div className="detail-feature-image">
+                  <img
+                    src={group.card_image}
+                    alt={group.card_image_alt || ""}
+                  />
+                </div>
+              ) : null}
             </div>
             <div>
               <h2>{group.title}</h2>
